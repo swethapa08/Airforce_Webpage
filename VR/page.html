@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilot Efficiency Prediction</title>
+    <style>
+        body {
+ font-family: Arial, sans-serif; text-align: center; margin: 107px; 
+background: linear-gradient(120deg, #CF9FFF, #ffffff, #5F9EA0);
+            animation: backgroundAnimation 10s infinite alternate;
+            font-family: 'Monospace', sans-serif;
+}
+        input, button { margin: 10px; padding: 8px; }
+        .container { max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
+/* Ball animation container */
+/* Ball animation container */
+#animated-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+/* Ball styles */
+.ball {
+    position: absolute;
+    border-radius: 70%;
+    opacity: 0.9;
+    animation: floatUp linear infinite;
+}
+
+/* Floating animation */
+@keyframes floatUp {
+    from {
+        transform: translateY(100vh) translateX(0);
+    }
+    to {
+        transform: translateY(-10vh) translateX(calc(100vw - 50px));
+    }
+}
+
+#animated-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+/* Ball styles */
+.ball {
+    position: absolute;
+    border-radius: 75%;
+    opacity: 0.7;
+    animation: floatUp linear infinite;
+}
+
+/* Floating animation */
+@keyframes floatUp {
+    from {
+        transform: translateY(100vh) translateX(0);
+    }
+    to {
+        transform: translateY(-10vh) translateX(calc(100vw - 50px));
+    }
+}
+
+nav {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 15px 0;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navigation ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+        .navigation ul li {
+            display: inline;
+        }
+        .navigation ul li a {
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            color: #953553;
+            transition: 0.3s;
+        }
+        .navigation ul li a:hover, .navigation ul li a.active {
+            color: #5F9EA0;
+        }
+
+    </style>
+</head>
+<body>
+<nav>
+        <img src="img/img1.png" class="logo" alt="" style="height:47px;width:47px">
+        <div class="navigation">
+            <ul>
+                <li><a href="page1.html">HOME</a></li>
+                <li><a href="page.html" class="active">RESULTS</a></li>
+                <li><a href="activity.html" id="act">ACTIVITIES</a></li>
+                <li><a href="About_Us.html">ABOUT US</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <h2>Pilot Efficiency Prediction</h2>
+        <label>Heart Rate (BPM):</label> <input type="number" id="heartRate"><br>
+        <label>Eye Tracking Accuracy:</label> <input type="number" step="0.01" id="eyeTracking"><br>
+        <label>Reaction Time (ms):</label> <input type="number" id="reactionTime"><br>
+        <label>Flight Control Precision:</label> <input type="number" step="0.01" id="flightPrecision"><br>
+        <label>Decision Making Speed (s):</label> <input type="number" step="0.01" id="decisionSpeed"><br>
+        <label>Error Rate:</label> <input type="number" step="0.01" id="errorRate"><br>
+        <button onclick="predictEfficiency()">Predict Efficiency</button>
+        <h3 id="result"></h3>
+    </div>
+
+    <script>
+        // Sample dataset extracted from CSV (you can add more)
+        const dataset = [
+            { heartRate: 79.97, eyeTracking: 0.75, reactionTime: 284.54, flightPrecision: 0.70, decisionSpeed: 2.96, errorRate: 0.18, efficiency: 68.49 },
+            { heartRate: 73.61, eyeTracking: 0.73, reactionTime: 262.39, flightPrecision: 0.74, decisionSpeed: 1.38, errorRate: 0.09, efficiency: 71.72 },
+            { heartRate: 81.47, eyeTracking: 0.89, reactionTime: 315.95, flightPrecision: 0.86, decisionSpeed: 2.03, errorRate: 0.16, efficiency: 76.80 },
+            { heartRate: 90.23, eyeTracking: 0.91, reactionTime: 367.02, flightPrecision: 0.62, decisionSpeed: 1.35, errorRate: 0.08, efficiency: 69.64 },
+            { heartRate: 72.65, eyeTracking: 0.70, reactionTime: 206.24, flightPrecision: 0.68, decisionSpeed: 1.65, errorRate: 0.14, efficiency: 70.72 }
+        ];
+
+        function predictEfficiency() {
+            let hr = parseFloat(document.getElementById("heartRate").value);
+            let et = parseFloat(document.getElementById("eyeTracking").value);
+            let rt = parseFloat(document.getElementById("reactionTime").value);
+            let fp = parseFloat(document.getElementById("flightPrecision").value);
+            let ds = parseFloat(document.getElementById("decisionSpeed").value);
+            let er = parseFloat(document.getElementById("errorRate").value);
+
+            if (isNaN(hr) || isNaN(et) || isNaN(rt) || isNaN(fp) || isNaN(ds) || isNaN(er)) {
+                document.getElementById("result").innerText = "Please enter valid numbers.";
+                return;
+            }
+
+            // Find closest dataset match based on Euclidean distance
+            let closest = dataset.reduce((prev, curr) => {
+                let prevDist = Math.hypot(prev.heartRate - hr, prev.eyeTracking - et, prev.reactionTime - rt, prev.flightPrecision - fp, prev.decisionSpeed - ds, prev.errorRate - er);
+                let currDist = Math.hypot(curr.heartRate - hr, curr.eyeTracking - et, curr.reactionTime - rt, curr.flightPrecision - fp, curr.decisionSpeed - ds, curr.errorRate - er);
+                return currDist < prevDist ? curr : prev;
+            });
+
+            document.getElementById("result").innerText = Predicted Efficiency Score: ${closest.efficiency.toFixed(2)};
+        }
+    </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const ballContainer = document.createElement("div");
+        ballContainer.id = "animated-bg";
+        document.body.appendChild(ballContainer);
+
+        for (let i = 0; i < 15; i++) {
+            let ball = document.createElement("div");
+            ball.classList.add("ball");
+            
+            // Random size, position, speed, and color
+            let size = Math.random() * 50 + 10; // Ball size between 10px-60px
+            ball.style.width = `${size}px`;
+            ball.style.height = `${size}px`;
+            ball.style.left = `${Math.random() * 100}vw`;
+            ball.style.backgroundColor = `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, 0.8)`;
+            ball.style.animationDuration = `${Math.random() * 5 + 3}s`; // Speed between 3-8s
+            
+            ballContainer.appendChild(ball);
+        }
+    });
+</script>
+<script>
+        // Sample dataset extracted from CSV (you can add more)
+        const dataset = [
+            { heartRate: 79.97, eyeTracking: 0.75, reactionTime: 284.54, flightPrecision: 0.70, decisionSpeed: 2.96, errorRate: 0.18, efficiency: 68.49 },
+            { heartRate: 73.61, eyeTracking: 0.73, reactionTime: 262.39, flightPrecision: 0.74, decisionSpeed: 1.38, errorRate: 0.09, efficiency: 71.72 },
+            { heartRate: 81.47, eyeTracking: 0.89, reactionTime: 315.95, flightPrecision: 0.86, decisionSpeed: 2.03, errorRate: 0.16, efficiency: 76.80 },
+            { heartRate: 90.23, eyeTracking: 0.91, reactionTime: 367.02, flightPrecision: 0.62, decisionSpeed: 1.35, errorRate: 0.08, efficiency: 69.64 },
+            { heartRate: 72.65, eyeTracking: 0.70, reactionTime: 206.24, flightPrecision: 0.68, decisionSpeed: 1.65, errorRate: 0.14, efficiency: 70.72 }
+        ];
+
+        function predictEfficiency() {
+            let hr = parseFloat(document.getElementById("heartRate").value);
+            let et = parseFloat(document.getElementById("eyeTracking").value);
+            let rt = parseFloat(document.getElementById("reactionTime").value);
+            let fp = parseFloat(document.getElementById("flightPrecision").value);
+            let ds = parseFloat(document.getElementById("decisionSpeed").value);
+            let er = parseFloat(document.getElementById("errorRate").value);
+
+            if (isNaN(hr) || isNaN(et) || isNaN(rt) || isNaN(fp) || isNaN(ds) || isNaN(er)) {
+                document.getElementById("result").innerText = "Please enter valid numbers.";
+                return;
+            }
+
+            // Find closest dataset match based on Euclidean distance
+            let closest = dataset.reduce((prev, curr) => {
+                let prevDist = Math.hypot(prev.heartRate - hr, prev.eyeTracking - et, prev.reactionTime - rt, prev.flightPrecision - fp, prev.decisionSpeed - ds, prev.errorRate - er);
+                let currDist = Math.hypot(curr.heartRate - hr, curr.eyeTracking - et, curr.reactionTime - rt, curr.flightPrecision - fp, curr.decisionSpeed - ds, curr.errorRate - er);
+                return currDist < prevDist ? curr : prev;
+            });
+
+            document.getElementById("result").innerText = `Predicted Efficiency Score: ${closest.efficiency.toFixed(2)}`;
+        }
+    </script>
+
+
+
+</body>
+</html>
+

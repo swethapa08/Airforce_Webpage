@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Education Website Template</title>
+
+	<!-- font Awesome CDN link -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+
+	<!-- External CSS -->
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<!-- JQuery CDN link -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #CF9FFF, #ffffff, #5F9EA0);
+            animation: backgroundAnimation 10s infinite alternate;
+            font-family: 'Monospace', sans-serif;
+        }
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+       
+
+        nav {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 15px 0;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navigation ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+        .navigation ul li {
+            display: inline;
+        }
+        .navigation ul li a {
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            color: #953553;
+            transition: 0.3s;
+        }
+        .navigation ul li a:hover, .navigation ul li a.active {
+            color: #5F9EA0;
+        }
+
+        .title {
+            position: absolute;
+            top: 10%;
+            font-size: 37px;
+            font-weight: bold;
+            padding: 10px;
+            text-align: center;
+            color: #702963;
+            margin: 57px;
+            font-family: 'Arial', sans-serif;
+            border: 4px solid transparent;
+            animation: borderAnimation 3s infinite alternate, titleAnimation 3s infinite alternate, glow 1.5s infinite alternate;
+        }
+
+        @keyframes titleAnimation {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        @keyframes borderAnimation {
+            0% { border-color: light-blue; box-shadow: 0px 0px 15px #E97451; }
+            50% { border-color: violet; box-shadow: 0px 0px 15px #FF0000; }
+            100% { border-color: #702963; box-shadow: 0px 0px 15px #E97451; }
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px rgba(233, 116, 81, 0.7); }
+            100% { text-shadow: 0 0 20px rgba(106, 27, 154, 0.7); }
+        }
+
+        .quote {
+            position: absolute;
+            top: 20%;
+            margin: 97px;
+            font-size: 20px;
+            color: #686868;
+            text-align: center;
+            font-family: 'Orbitron';
+            animation: fadeIn 3s infinite alternate;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .jet {
+            width: 700px;
+            position: absolute;
+            bottom: 0;
+            left: -100px;
+            animation: takeoff 6s linear infinite;
+        }
+
+        @keyframes takeoff {
+            0% { transform: translate(-10vw, 10vh) rotate(0deg); }
+            100% { transform: translate(110vw, -5vh) rotate(30deg); }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: float 5s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(1);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+</style>
+</head>
+<body>
+
+<div>
+<nav>
+        <img src="img/img1.png" class="logo" alt="" style="height:47px;width:47px">
+        <div class="navigation">
+            <ul>
+                <li><a href="page1.html">HOME</a></li>
+                <li><a href="page.html">RESULTS</a></li>
+                <li><a href="activity.html" id="act">ACTIVITIES</a></li>
+                <li><a href="About_Us.html" class="active">ABOUT US</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
+			<img src="img/p1.jpg" id="menu-btn" alt="">
+            </ul>
+        </div>
+    </nav>
+<div id="grad">
+	<form action="">
+	<button onclick=func1() type="submit" id="cb" style="padding:17px;"><i class="fa-solid fa-robot" id="rob" style="color: #20B2AA"></i>   AI &nbsp;</button>
+	</form>
+</div>
+	<!-- Hero section starts from here -->
+	<section id="home">
+		<h2>
+			Commit to Success, Achieve More
+		</h2><br>
+		<p>
+			Experience cutting-edge VR simulations for Air Force pilot training, enhancing skills through immersive, AI-driven scenarios. Prepare for success with real-time feedback and advanced analytics.
+		</p><br>
+		<div class="btn">
+			<a href="contact.html" class="blue">Learn More</a>&nbsp;
+			<a href="join.html" class="yellow">Training</a>
+		</div>
+	</section>
+	<!-- Hero section ends from here -->
+	<br><br><br>
+
+	
+	<!-- Features section starts from here -->
+	<section id="features">
+		<h1>AWESOME FEATURES</h1><br>
+		<p>Replenish man have thing gathering lights yielding shall you</p>
+
+		<div class="fea-base">
+			<div class="fea-box">
+				<i class="fas fa-graduation-cap"></i>
+				<h3>Immersive Real-World Scenarios</h3>
+				<p>
+					Train in lifelike VR environments with dynamic weather, terrain, and mission challenges.
+				</p>
+			</div>
+
+			<div class="fea-box">
+				<i class="fa-solid fa-book-bookmark"></i>
+				<h3>AI-Powered Performance</h3>
+				<p>
+					Get real-time feedback and detailed analytics to track and improve your skills.
+				</p>
+			</div>
+
+			<div class="fea-box">
+				<i class="fas fa-award"></i>
+				<h3>Customizable Training Modules</h3>
+				<p>
+					Tailored simulations to match individual training needs and mission requirements.
+				</p>
+			</div>
+		</div>
+	</section>
+	<!-- Features section ends from here -->
+
+<br><br><br>
+	<!-- Registration section starts from here -->
+	<section id="registration">
+		<div class="reminder">
+			<h1>Registration To Get It</h1>
+
+			<div class="time">
+				<div class="date">18 <br> Days</div>
+				<div class="date">23 <br> Hours</div>
+				<div class="date">06 <br> Minutes</div>
+				<div class="date">58 <br> Seconds</div>
+			</div>
+		</div>
+		<div class="form">
+			<h3>Create Free Account NOW!</h3>
+
+			<input type="text" placeholder="Name" name="" id="">
+			<input type="email" placeholder="Email ID" name="" id="">
+			<input type="text" placeholder="Contact Number" name="" id="">
+
+			<div class="btn">
+				<a href="#" class="yellow">Submit Form</a>
+			</div>
+		</div>
+	</section>
+	<!-- Registration section ends from here -->
+
+
+	<!-- Experts section starts from here -->
+	<section id="experts">
+		<h1>Community Experts</h1>
+		<p>Replenish man have thing gathering lights yielding shall you</p>
+		<div class="expert-box">
+			<div class="profile">
+				<img src="img/pro1.webp" alt="">
+				<h6>Ema Ernik</h6>
+				<p>Aviation Strategy Consultant</p>
+				<div class="pro-links">
+					<i class="fab fa-facebook"></i>
+					<i class="fab fa-instagram"></i>
+					<i class="fab fa-linkedin-in"></i>
+				</div>
+			</div>
+
+			<div class="profile">
+				<img src="img/pro2.webp" alt="">
+				<h6>Jason chua</h6>
+				<p>Pilot Training Advisor</p>
+				<div class="pro-links">
+					<i class="fab fa-facebook"></i>
+					<i class="fab fa-instagram"></i>
+					<i class="fab fa-linkedin-in"></i>
+				</div>
+			</div>
+
+			<div class="profile">
+				<img src="img/pro3.webp" alt="">
+				<h6>Maalik Halper</h6>
+				<p>VR Simulation Specialist</p>
+				<div class="pro-links">
+					<i class="fab fa-facebook"></i>
+					<i class="fab fa-instagram"></i>
+					<i class="fab fa-linkedin-in"></i>
+				</div>
+			</div>
+
+			<div class="profile">
+				<img src="img/pro4.webp" alt="">
+				<h6>Jennifer Lopez</h6>
+				<p>Pilot Performance Analyst</p>
+				<div class="pro-links">
+					<i class="fab fa-facebook"></i>
+					<i class="fab fa-instagram"></i>
+					<i class="fab fa-linkedin-in"></i>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Experts section ends from here -->
+
+
+	<!-- Footer section ends from here -->
+
+	<script>
+		// Show menu links on burger click
+		$('#menu-btn').click(function(){
+			$('nav .navigation ul').addClass('active')
+		});
+
+		// Hide navbar on click function
+		$('#menu-close').click(function(){
+			$('nav .navigation ul').removeClass('active')
+		});
+</script>
+<script>
+function func1(){
+window.open("but_cb.html")
+}
+</script>
+ <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src=".js/materialize.js"></script>
+  <script src="js/init.js"></script>

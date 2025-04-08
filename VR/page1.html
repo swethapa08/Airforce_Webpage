@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIRTUAERO</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: linear-gradient(120deg, #CF9FFF, #ffffff, #5F9EA0);
+            animation: backgroundAnimation 10s infinite alternate;
+            font-family: 'Monospace', sans-serif;
+        }
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 15px 0;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navigation ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+        .navigation ul li {
+            display: inline;
+        }
+        .navigation ul li a {
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            color: #953553;
+            transition: 0.3s;
+        }
+        .navigation ul li a:hover, .navigation ul li a.active {
+            color: #5F9EA0;
+        }
+
+        .title {
+            position: absolute;
+            top: 10%;
+            font-size: 37px;
+            font-weight: bold;
+            padding: 10px;
+            text-align: center;
+            color: #702963;
+            margin: 57px;
+            font-family: 'Arial', sans-serif;
+            border: 4px solid transparent;
+            animation: borderAnimation 3s infinite alternate, titleAnimation 3s infinite alternate, glow 1.5s infinite alternate;
+        }
+
+        @keyframes titleAnimation {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        @keyframes borderAnimation {
+            0% { border-color: light-blue; box-shadow: 0px 0px 15px #E97451; }
+            50% { border-color: violet; box-shadow: 0px 0px 15px #FF0000; }
+            100% { border-color: #702963; box-shadow: 0px 0px 15px #E97451; }
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px rgba(233, 116, 81, 0.7); }
+            100% { text-shadow: 0 0 20px rgba(106, 27, 154, 0.7); }
+        }
+
+        .quote {
+            position: absolute;
+            top: 20%;
+            margin: 97px;
+            font-size: 20px;
+            color: #686868;
+            text-align: center;
+            font-family: 'Orbitron';
+            animation: fadeIn 3s infinite alternate;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .jet {
+            width: 700px;
+            position: absolute;
+            bottom: 0;
+            left: -100px;
+            animation: takeoff 6s linear infinite;
+        }
+
+        @keyframes takeoff {
+            0% { transform: translate(-10vw, 10vh) rotate(0deg); }
+            100% { transform: translate(110vw, -5vh) rotate(30deg); }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: float 5s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(1);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <img src="img/img1.png" class="logo" alt="" style="height:47px;width:47px">
+        <div class="navigation">
+            <ul>
+                <li><a href="page1.html" class="active">HOME</a></li>
+                <li><a href="page.html">RESULTS</a></li>
+                <li><a href="activity.html" id="act">ACTIVITIES</a></li>
+                <li><a href="About_Us.html">ABOUT US</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="title">VIRTUAERO</div>
+        <div class="quote">A better tomorrow is built on the wings of today’s courage!!</div>
+        <img src="image.png" alt="Jet" class="jet">
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="particles">
+        <script>
+            const particlesContainer = document.querySelector('.particles');
+            for (let i = 0; i < 50; i++) {
+                let particle = document.createElement('div');
+                particle.className = 'particle';
+                let size = Math.random() * 5 + 5;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        </script>
+    </div>
+</body>
+</html>
